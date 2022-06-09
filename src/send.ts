@@ -17,7 +17,7 @@ export const send = amqp.connect('amqp://localhost', function(error1, connection
         channel.assertExchange(exchange, 'direct', isDurable)
         // ------ 4th step -> send/publish the message ------
         channel.publish(exchange, key, Buffer.from(msg))
-        console.log('[x] Sent %s', msg)
+        console.log(`The message "${msg}" was sent under the "${key}" key`)
     })
 
     setTimeout(function() {
