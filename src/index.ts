@@ -1,5 +1,5 @@
 // ------ import amqp ------ 
-import amqp from 'amqplib/callback_api';
+const amqp = require('amqplib/callback_api')
 
 // ------ variables declaration ------
 const exchange = 'aeler'
