@@ -1,0 +1,20 @@
+# Step 1: build node modules
+FROM node:17 as builder
+# ARG BITBUCKET_ACCESS_KEY_SCHEMAS_AND_APICORE
+RUN mkdir -p -m 0600 ~/.ssh
+
+WORKDIR /app
+COPY package.json package-lock.json ./
+# The following line is somehow needed to trigger npm prepare scripts for git modules
+RUN npm config set unsafe-perm true
+ENV NODE_ENV development
+RUN npm ci
+
+# Step 2: build application
+FROM node:17-alpine
+WORKDIR /app
+ENV NODE_ENV development
+COPY --from=builder /app/node_modules ./node_modules/
+COPY . .
+# RUN npm run build
+# CMD ["node", "dist/index.js"]
